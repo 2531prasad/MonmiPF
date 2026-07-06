@@ -32,8 +32,8 @@
   --sans:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;
 }
 *{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:auto;overflow-x:hidden;overscroll-behavior:none}
-body{font-family:var(--sans);background:var(--bg);color:var(--ink);font-size:16px;line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden;overscroll-behavior:none}
+html{scroll-behavior:auto;overflow-x:hidden}
+body{font-family:var(--sans);background:var(--bg);color:var(--ink);font-size:16px;line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 img{max-width:100%;height:auto;display:block}
 a{color:inherit}
 ::selection{background:var(--pink);color:#fff}
@@ -84,6 +84,12 @@ section{padding:96px 0;scroll-margin-top:78px}
 .say-hello .k{font-size:10px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--pink-soft)}
 .say-hello .v{font-size:17px;font-weight:500;color:#fff}
 .say-hello .s{font-size:11.5px;color:var(--on-dark-faint);letter-spacing:.03em}
+.say-hello.whatsapp{min-width:240px}
+.contact-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.contact-action{display:flex;flex-direction:column;justify-content:center;gap:4px;min-height:92px;padding:16px 18px;border-radius:14px;background:rgba(255,255,255,.08);border:1px solid rgba(243,184,204,.18);color:#fff;text-decoration:none;transition:transform .25s,background .25s,border-color .25s}
+.contact-action:hover{transform:translateY(-3px);background:rgba(243,184,204,.14);border-color:rgba(243,184,204,.34)}
+.contact-action .v{font-size:14.5px;font-weight:600;line-height:1.35;word-break:break-word}
+.contact-action .s{font-size:11px;color:var(--on-dark-faint);letter-spacing:.03em}
 .freelance-card{background:var(--dark);border-radius:var(--radius);padding:26px 30px;max-width:400px;box-shadow:0 10px 34px rgba(34,18,25,.18)}
 .freelance-card .status{display:flex;align-items:center;gap:8px;margin-bottom:12px;font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--green)}
 .freelance-card .status::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 0 3px rgba(34,197,94,.25);animation:pulse 2s infinite}
@@ -235,7 +241,8 @@ footer p + p{margin-top:4px}
 }
 @media (max-width:768px){
   section{padding:72px 0}
-  .nav-links,.nav .nav-cta{display:none}
+  .nav-links{display:none}
+  .nav-cta{margin-left:auto;padding:9px 18px}
   .burger{display:flex}
   .hero{padding:130px 0 64px}
   .hero-cards{flex-direction:column}
@@ -249,6 +256,7 @@ footer p + p{margin-top:4px}
 @media (max-width:430px){
   .res-grid{grid-template-columns:1fr}
   .proj-media{grid-template-columns:1fr}
+  .contact-actions{grid-template-columns:1fr}
 }
 </style>
 </head>
@@ -266,7 +274,7 @@ footer p + p{margin-top:4px}
       <li><a href="#about">About</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
-    <a href="mailto:Monmiwork514@gmail.com" class="nav-cta">Hire me</a>
+    <a href="#freelance" class="nav-cta">Hire me</a>
     <button class="burger" id="burger" aria-expanded="false" aria-controls="mobileMenu" aria-label="Toggle menu">
       <span></span><span></span><span></span>
     </button>
@@ -296,6 +304,11 @@ footer p + p{margin-top:4px}
         <span class="k">✦&nbsp; Say hello</span>
         <span class="v">monmiwork514@gmail.com</span>
         <span class="s">Reach me here &nbsp;·&nbsp; Let's connect &nbsp;·&nbsp; One email away</span>
+      </a>
+      <a href="https://wa.me/6003131409" class="say-hello whatsapp">
+        <span class="k">&#9742;&nbsp; WhatsApp</span>
+        <span class="v">Reach me via WhatsApp</span>
+        <span class="s">https://wa.me/6003131409</span>
       </a>
       <div class="freelance-card">
         <div class="status">Available for freelance</div>
@@ -705,9 +718,9 @@ footer p + p{margin-top:4px}
         <div class="k">Email</div>
         <div class="v">Monmiwork514@gmail.com</div>
       </a>
-      <a href="tel:+916003131409" class="contact-link">
+      <a href="https://wa.me/6003131409" class="contact-link">
         <div class="icon" aria-hidden="true">📞</div>
-        <div class="k">Phone</div>
+        <div class="k">WhatsApp</div>
         <div class="v">+91 6003131409</div>
       </a>
       <div class="contact-link">
@@ -747,6 +760,18 @@ footer p + p{margin-top:4px}
     a.addEventListener('click', function(){
       menu.classList.remove('open');
       burger.setAttribute('aria-expanded','false');
+    });
+  });
+
+  // Smooth anchor navigation
+  document.querySelectorAll('a[href^="#"]').forEach(function(a){
+    a.addEventListener('click', function(e){
+      var id = a.getAttribute('href');
+      if(id.length < 2) return;
+      var el = document.querySelector(id);
+      if(!el) return;
+      e.preventDefault();
+      el.scrollIntoView({behavior:'smooth', block:'start'});
     });
   });
 
